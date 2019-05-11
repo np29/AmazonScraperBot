@@ -21,10 +21,8 @@ signin_form = beautify_html.find('form', {'name': 'signIn'})
 for field in signin_form.find_all('input'):
     try:
         data[field['name']] = field['value']
-        
     except:
         pass
-
 data[u'email'] = "braveharambe@gmail.com"
 data[u'password'] = ""
 #signin
