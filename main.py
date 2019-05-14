@@ -1,36 +1,34 @@
 import requests
 from bs4 import BeautifulSoup
 from selenium import webdriver
+from lxml import html
 
 
 url = "https://www.amazon.com/gp/sign-in.html"
-session = requests.Session()
+browser = webdriver.Chrome()
+browser.get(url)
 
-driver = webdriver.Firefox()
-driver.get(url)
-request_browser_cookies = driver.get_cookies()
+#content = browser.page_source
+#html_doc = html.fromstring(content)
 
-response = session.get(url)
-response_html = response.text
-print(response)
-beautify_html = BeautifulSoup(response_html, 'lxml')
+email_box = browser.find_element_by_id("ap_email")
+password_box = browser.find_element_by_id("ap_password")
+email_box.send_keys("braveharambe@gmail.com")
+password_box.send_keys("")
+browser.find_element_by_id("signInSubmit").click()
 
-print(beautify_html)
-data = {}
-signin_form = beautify_html.find('form', {'name': 'signIn'})
-for field in signin_form.find_all('input'):
-    try:
-        data[field['name']] = field['value']
-    except:
-        pass
-data[u'email'] = "braveharambe@gmail.com"
-data[u'password'] = ""
-#signin
-post_response = session.post('https://www.amazon.com/ap/signin', data = data)
-print(post_response)
+request_browser_cookies = browser.get_cookies()
 
-post_response = session.post('https://www.amazon.com/ga/giveaways/?pageId=1&ref_=aga_dp_lm', data = data)
-print(post_response)
+giveawaysUrl = "https://www.amazon.com/ga/giveaways?ref_=aga_dp_lm"
+browser.get(giveawaysUrl)
 
+#giveAways = browser.find_element_by_class_name("listing-info-container")
+#giveAways = browser.find_elements_by_tag_name("ul")
+#items = giveAways.find_elements_by_tag_name("li")
 
-session.close()
+giveAways = browser.find_element_by_xpath("//div[@id='reactApp']")
+print(giveAways)
+items = giveAways.find_element_by_xpath("//div//div//div//div//div//div//ul")
+print(items)
+for item in items:
+    item.click()

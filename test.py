@@ -26,3 +26,31 @@ c = [driver.add_cookie(c) for c in response_cookies_browser]
 
 #the browser now contains the cookies generated from the authentication    
 driver.get(url)
+
+
+
+#session = requests.Session()
+
+# response = session.get(url)
+# response_html = response.text
+# print(response)
+# beautify_html = BeautifulSoup(response_html, 'lxml')
+
+# data = {}
+# signin_form = beautify_html.find('form', {'name': 'signIn'})
+# for field in signin_form.find_all('input'):
+#     try:
+#         data[field['name']] = field['value']
+#     except:
+#         pass
+# data[u'email'] = "braveharambe@gmail.com"
+# data[u'password'] = ""
+# #signin
+# post_response = session.post('https://www.amazon.com/ap/signin', data = data)
+# print(post_response)
+
+# post_response = session.post('https://www.amazon.com/ga/giveaways/?pageId=1&ref_=aga_dp_lm', data = data)
+# print(post_response)
+
+
+#session.close()
